@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Калькулятор імпортної вартості авто</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      margin-top: 40px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 32px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      padding: 32px;
+      max-width: 950px;
+      width: 98%;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.3rem;
+      margin-bottom: 25px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #252525;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px 30px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border-radius: 18px;
+      padding: 16px 12px 10px 12px;
+      box-shadow: 0 2px 10px rgba(160, 200, 255, 0.12);
+      min-width: 0;
+      min-height: 75px;
+    }
+
+    label {
+      font-size: 1.07rem;
+      margin-bottom: 6px;
+      color: #2c2c2c;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+
+    input[type="number"], select {
+      font-size: 1.15rem;
+      padding: 8px;
+      border-radius: 10px;
+      border: 1px solid #c7c7c7;
+      outline: none;
+      margin-top: 2px;
+      background: #f6fafd;
+      transition: border .2s;
+    }
+
+    input[type="number"]:focus, select:focus {
+      border: 1.5px solid #5abbe1;
+      background: #fff;
+    }
+
+    .total {
+      grid-column: span 3;
+      margin-top: 32px;
+      text-align: right;
+      background: linear-gradient(90deg, #a8edea 0%, #fed6e3 100%);
+      border-radius: 18px;
+      padding: 18px 30px;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #222;
+      box-shadow: 0 4px 18px rgba(173, 170, 255, 0.08);
+    }
+
+    @media (max-width: 900px) {
+      .container {padding: 14px;}
+      form {gap: 14px 12px;}
+    }
+    @media (max-width: 700px) {
+      form {grid-template-columns: 1fr;}
+      .total {text-align: center;}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Калькулятор імпортної вартості авто</h1>
+    <form id="importForm">
+      <!-- Row 1 -->
+      <div class="form-group">
+        <label for="carType">Тип автомобіля</label>
+        <select id="carType">
+          <option>легковий</option>
+          <option>позашляховик</option>
+          <option>кросовер</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="fuelType">Тип палива</label>
+        <select id="fuelType">
+          <option>бензин</option>
+          <option>дизель</option>
+          <option>гібрид</option>
+          <option>електромобіль</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="year">Рік випуску</label>
+        <select id="year"></select>
+      </div>
+      <!-- Row 2 -->
+      <div class="form-group">
+        <label for="engineVolume">Обʼєм двигуна</label>
+        <select id="engineVolume"></select>
+      </div>
+      <div class="form-group">
+        <label for="carPrice">Ціна автомобіля, $</label>
+        <input type="number" id="carPrice" min="0" step="0.01" placeholder="0">
+      </div>
+      <div class="form-group">
+        <label for="auctionFee">Аукціонний збір, $</label>
+        <input type="number" id="auctionFee" min="0" step="0.01" placeholder="0">
+      </div>
+      <!-- Row 3 -->
+      <div class="form-group">
+        <label for="usDelivery1">Доставка по США, $</label>
+        <input type="number" id="usDelivery1" min="0" step="0.01" placeholder="0">
+      </div>
+      <div class="form-group">
+        <label for="usDelivery2">Доставка по США, $</label>
+        <input type="number" id="usDelivery2" min="0" step="0.01" placeholder="0">
+      </div>
+      <div class="form-group">
+        <label for="exportDocs">Документи на експорт авто, $</label>
+        <input type="number" id="exportDocs" min="0" step="0.01" placeholder="0">
+      </div>
+      <!-- Row 4 -->
+      <div class="form-group">
+        <label for="klaipedaUnload">Вигрузка з порту Клайпеда, $</label>
+        <input type="number" id="klaipedaUnload" min="0" step="0.01" placeholder="0">
+      </div>
+      <div class="form-group">
+        <label for="klaipedaLviv">Доставка Клайпеда - Львів, $</label>
+        <input type="number" id="klaipedaLviv" min="0" step="0.01" placeholder="0">
+      </div>
+      <div class="form-group">
+        <label for="borderSpecial">Проходження кордону та спец. транспорт, $</label>
+        <input type="number" id="borderSpecial" min="0" step="0.01" placeholder="0">
+      </div>
+      <!-- Row 5 -->
+      <div class="form-group">
+        <label for="brokerFee">Брокерські послуги, $</label>
+        <input type="number" id="brokerFee" min="0" step="0.01" placeholder="0">
+      </div>
+      <div class="form-group">
+        <label for="customsDelivery">Доставка на митницю, $</label>
+        <input type="number" id="customsDelivery" min="0" step="0.01" placeholder="0">
+      </div>
+      <div class="form-group">
+        <label for="commission">Комісія, $</label>
+        <input type="number" id="commission" min="0" step="0.01" placeholder="0">
+      </div>
+      <!-- Row 6 -->
+      <div class="form-group">
+        <label for="excise">Акциз, $</label>
+        <input type="number" id="excise" min="0" step="0.01" placeholder="0">
+      </div>
+      <div class="form-group">
+        <label for="importDuty">Ввізне мито, $</label>
+        <input type="number" id="importDuty" min="0" step="0.01" placeholder="0">
+      </div>
+      <div class="form-group">
+        <label for="vat">ПДВ, $</label>
+        <input type="number" id="vat" min="0" step="0.01" placeholder="0">
+      </div>
+      <!-- Total -->
+      <div class="total" id="totalCost">Загальна імпортна вартість: $0</div>
+    </form>
+  </div>
+  <script>
+    // Fill Year select (2026 to 1990)
+    const yearSelect = document.getElementById('year');
+    for (let y = 2026; y >= 1990; y--) {
+      let o = document.createElement('option');
+      o.value = y; o.textContent = y;
+      yearSelect.appendChild(o);
+    }
+    // Fill Engine Volume select (0.1 to 10, step 0.1)
+    const engineVolumeSelect = document.getElementById('engineVolume');
+    for (let v = 0.1; v <= 10.0; v += 0.1) {
+      let o = document.createElement('option');
+      o.value = v.toFixed(1); o.textContent = v.toFixed(1);
+      engineVolumeSelect.appendChild(o);
+    }
+    // Listen to all inputs for calculation
+    const ids = [
+      'carPrice','auctionFee','usDelivery1','usDelivery2','exportDocs',
+      'klaipedaUnload','klaipedaLviv','borderSpecial','brokerFee',
+      'customsDelivery','commission','excise','importDuty','vat'
+    ];
+    function calculateTotal() {
+      let sum = 0;
+      for (let id of ids) {
+        let val = parseFloat(document.getElementById(id).value.replace(',', '.'));
+        sum += (isNaN(val) ? 0 : val);
+      }
+      document.getElementById('totalCost').textContent = 'Загальна імпортна вартість: $' + sum.toLocaleString('uk-UA', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    }
+    for (let id of ids) {
+      document.getElementById(id).addEventListener('input', calculateTotal);
+    }
+    // Initial calculation
+    calculateTotal();
+  </script>
+</body>
+</html>
